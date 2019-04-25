@@ -1,8 +1,8 @@
 import numpy
+import math
 
 def sigmoid(inpt):
     return 1.0/(1.0+numpy.exp(-1*inpt))
-
 
 def predict_outputs(weights_mat, data_inputs, data_outputs, activation="relu"):
     predictions = numpy.zeros(shape=(data_inputs.shape[0]))
@@ -20,13 +20,14 @@ def predict_outputs(weights_mat, data_inputs, data_outputs, activation="relu"):
     accuracy = (correct_predictions/data_outputs.size)*100
     return accuracy, predictions
     
+
+def calculate_distance
+    a= data_inputs.
+    b=data_outputs.
+dst = distance.euclidean(a, b)
+
+def fitness(weights_mat, data_inputs, data_outputs, activation="sigmoid"):
+    Error=dist(data_inputs,data_outputs)
 #la función de fitness debe ser medir la distancia de la clasificación que hace la red con
 #la clasificación que tienen los datos
 #Dependiendo del rendimiento del fitness, seleccionas los mejores cromosomas para la reproducción del genético.
-def fitness(weights_mat, data_inputs, data_outputs, activation="sigmoid"):
-    accuracy = numpy.empty(shape=(weights_mat.shape[0]))
-    for sol_idx in range(weights_mat.shape[0]):
-        curr_sol_mat = weights_mat[sol_idx, :]
-        accuracy[sol_idx], _ = predict_outputs(curr_sol_mat, data_inputs, data_outputs, activation=activation)
-    return accuracy
-
