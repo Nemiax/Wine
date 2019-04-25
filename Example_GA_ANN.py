@@ -1,4 +1,9 @@
 import csv
+filename = "mlptrain.csv"
+#La base de datos está en csv, son 13 características de los vinos. Se supone tome el primer renglón como las entradas 
+#(e_inputs) y multiplique pesos aleatorios y empiece a evolucionar.
+#Problema 1: no econtré cómo hacer eso :(
+
 
 """
 Genetic algorithm parameters:
@@ -7,21 +12,20 @@ Genetic algorithm parameters:
     Number of Generations
     Mutation Percent
 """
-
-sol_per_pop = 13
+e_inputs=13  
 num_parents_mating = 4
 num_generations = 100
 mutation_percent = 10
 
 #Creating the initial population.
 initial_pop_weights = []
-for curr_sol in numpy.arange(0, sol_per_pop):
-    HL1_neurons = 14
+for curr_sol in numpy.arange(0, e_inputs):
+    HL1_neurons = 13 #tengo 13 entradas
     input_HL1_weights = numpy.random.uniform(low=-0.1, high=0.1,
                                              size=(data_inputs.shape[1], HL1_neurons))
     
     
-    output_neurons = 3 
+    output_neurons = 3 #tres salidas, pues hay tres clasificaciones de vinos
     HL1_output_weights = numpy.random.uniform(low=-0.1, high=0.1,
                                               size=(HL1_neurons, output_neurons))
 
