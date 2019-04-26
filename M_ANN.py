@@ -158,6 +158,11 @@ def fitness(indiVec, indiSize):
     return fitness
 
 
+def pop_fitness(pop, indiSize):
+
+    fitness = [ M_ANN.fitness(vec, indiSize) for vec in pop ]
+    # print(fitness)
+    return numpy.asarray(fitness)
 
 
 
