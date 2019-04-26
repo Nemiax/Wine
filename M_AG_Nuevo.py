@@ -51,6 +51,7 @@ for generation in range(num_generations):
 
 '  *****
     ALGORITMO GENETICO que genera ""off_springs"" de tamaño pop_size
+    y se basa en la población anterior, que se llama ""new_population""
     utilizando la funcion de fitness "" M_ANN.pop_fitness(pop, indiSize) ""
 '  *****
 
@@ -58,16 +59,16 @@ for generation in range(num_generations):
 
     new_population = off_springs
     # The best result in the current iteration.
-    print("Best result (Lowest Error) :   {} %".format( numpy.max(M_ANN.pop_fitness(pop, indiSize) )))
+    print("Best result (Lowest Error) :   {} %".format( numpy.max(M_ANN.pop_fitness(new_population, indiSize) )))
 
 
 
 # Getting the best solution after iterating finishing all generations.
 #At first, the fitness is calculated for each solution in the final generation.
-fitness = M_GA.our_pop_fitness(new_population, indiSize)
+fitness = M_ANN.pop_fitness(new_population, indiSize)
 # Then return the index of that solution corresponding to the best fitness.
 best_match_idx = numpy.where(fitness == numpy.max(fitness))
 
 print("Best solution : ", new_population[best_match_idx, :])
 
-print("Best result (Lowest Error) :   {} %".format( numpy.max(M_GA.our_pop_fitness(new_population, indiSize))))
+print("Best result (Lowest Error) :   {} %".format( numpy.max(M_ANN.pop_fitness(new_population, indiSize))))
