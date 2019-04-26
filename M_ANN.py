@@ -4,9 +4,22 @@ import csv
 
 
 def sigmoid(inpt):
-    return 1.0/(1.0+numpy.exp(-1*inpt))
+    return 1.0/(1.0+np.exp(-1*inpt))
 
-def vec2individuo( vec, nUmbrales, nFeatures, nOcultas, nSalida ):
+def vec2individuo( vec, indiSize ):
+
+    sizeVars = ['nUmbrales', 'nFeatures', 'nOcultas', 'nSalida']
+
+    nUmbrales, nFeatures, nOcultas, nSalida = [ indiSize[j] for j in sizeVars ]
+
+
+
+    count = nUmbrales + nFeatures*nOcultas + nOcultas*nSalida
+
+    if len(vec) < count:
+        raise ValueError(" El vector de individuo no es suficientemente grande ")
+    elif len(vec) > count:
+        print(" \n \n \n \n  El vector de individuo es más grande de lo necesario.  \n \n \n \n  ")
 
     last = 0
 
@@ -57,7 +70,11 @@ def iterVinos():
         print(f'Processed {line_count} lines.')
 
 
-def fitness(individuo):
+def fitness(indiVec, indiSize):
+# Empezamos con un vector y lo transformamos en un individuos de la forma descrita a continuación
+    individuo = vec2individuo(indiVec, indiSize)
+
+
 # El individuo son los pesos de la red acomodados como una lista de listas
 # 
 # Individuo = [ 
@@ -92,11 +109,11 @@ def fitness(individuo):
         cuentaVinos += 1
 
         # Valores de las características de los vinos
-        feats = np.asarray([ int(x) for x in wine[0:13] ])
+        feats = np.asarray([ float(x) for x in wine[0:13] ])
 
         # Valores en Neuronas para Vino actual
         capaNeuronasOcultas = [0.0 for x in oculto_ws ]
-        capaNeuronasFinal = [0.0 for x in final_w ]
+        capaNeuronasFinal = [0.0 for x in final_ws ]
         capaUmbralizada = [0.0 for x in umbrales]
 
 

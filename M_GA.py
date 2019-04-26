@@ -1,30 +1,19 @@
 import numpy
-import random
+import M_ANN
 
-# Converting each solution from matrix to vector.
-def mat_to_vector(mat_pop_weights):
-    pop_weights_vector = []
-    for sol_idx in range(mat_pop_weights.shape[0]):
-        curr_vector = []
-        for layer_idx in range(mat_pop_weights.shape[1]):
-            vector_weights = numpy.reshape(mat_pop_weights[sol_idx, layer_idx], newshape=(mat_pop_weights[sol_idx, layer_idx].size))
-            curr_vector.extend(vector_weights)
-        pop_weights_vector.append(curr_vector)
-    return numpy.array(pop_weights_vector)
+def cal_pop_fitness(equation_inputs, pop):
+    # Calculating the fitness value of each solution in the current population.
+    # The fitness function caulcuates the sum of products between each input and its corresponding weight.
+    fitness = numpy.sum(pop*equation_inputs, axis=1)
+    return fitness
 
-# Converting each solution from vector to matrix.
-def vector_to_mat(vector_pop_weights, mat_pop_weights):
-    mat_weights = []
-    for sol_idx in range(mat_pop_weights.shape[0]):
-        start = 0
-        end = 0
-        for layer_idx in range(mat_pop_weights.shape[1]):
-            end = end + mat_pop_weights[sol_idx, layer_idx].size
-            curr_vector = vector_pop_weights[sol_idx, start:end]
-            mat_layer_weights = numpy.reshape(curr_vector, newshape=(mat_pop_weights[sol_idx, layer_idx].shape))
-            mat_weights.append(mat_layer_weights)
-            start = end
-    return numpy.reshape(mat_weights, newshape=mat_pop_weights.shape)
+
+def our_pop_fitness(pop, indiSize):
+
+    fitness = [ M_ANN.fitness(vec, indiSize) for vec in pop ]
+    return numpy.asarray(fitness)
+
+
 
 def select_mating_pool(pop, fitness, num_parents):
     # Selecting the best individuals in the current generation as parents for producing the offspring of the next generation.
@@ -38,7 +27,7 @@ def select_mating_pool(pop, fitness, num_parents):
 
 def crossover(parents, offspring_size):
     offspring = numpy.empty(offspring_size)
-    # The point at which crossover takes place between two parents. Usually, it is at the center.
+    # The point at which crossover takes place between two parents. Usually it is at the center.
     crossover_point = numpy.uint8(offspring_size[1]/2)
 
     for k in range(offspring_size[0]):
@@ -52,12 +41,10 @@ def crossover(parents, offspring_size):
         offspring[k, crossover_point:] = parents[parent2_idx, crossover_point:]
     return offspring
 
-def mutation(offspring_crossover, mutation_percent):
-    num_mutations = numpy.uint8((mutation_percent*offspring_crossover.shape[1])/100)
-    mutation_indices = numpy.array(random.sample(range(0, offspring_crossover.shape[1]), num_mutations))
+def mutation(offspring_crossover):
     # Mutation changes a single gene in each offspring randomly.
     for idx in range(offspring_crossover.shape[0]):
         # The random value to be added to the gene.
         random_value = numpy.random.uniform(-1.0, 1.0, 1)
-        offspring_crossover[idx, mutation_indices] = offspring_crossover[idx, mutation_indices] + random_value
+        offspring_crossover[idx, 4] = offspring_crossover[idx, 4] + random_value
     return offspring_crossover
