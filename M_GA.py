@@ -11,6 +11,7 @@ def cal_pop_fitness(equation_inputs, pop):
 def our_pop_fitness(pop, indiSize):
 
     fitness = [ M_ANN.fitness(vec, indiSize) for vec in pop ]
+    # print(fitness)
     return numpy.asarray(fitness)
 
 

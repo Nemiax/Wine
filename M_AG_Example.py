@@ -27,9 +27,9 @@ Genetic algorithm parameters:
     Mating pool size
     Population size
 """
-sol_per_pop = 8 # Número de indiSizeviduos de la población.
+sol_per_pop = 88 # Número de indiSizeviduos de la población.
 num_parents_mating = 4
-num_generations = 5
+num_generations = 55
 
 
 
@@ -65,7 +65,7 @@ for generation in range(num_generations):
     new_population[parents.shape[0]:, :] = offspring_mutation
 
     # The best result in the current iteration.
-    print("Best result : ", numpy.max(M_GA.our_pop_fitness(new_population, indiSize)))
+    print("Best result (Lowest Error) :   {} %".format( numpy.max(M_GA.our_pop_fitness(new_population, indiSize))))
 
 
 
@@ -76,3 +76,5 @@ fitness = M_GA.our_pop_fitness(new_population, indiSize)
 best_match_idx = numpy.where(fitness == numpy.max(fitness))
 
 print("Best solution : ", new_population[best_match_idx, :])
+
+print("Best result (Lowest Error) :   {} %".format( numpy.max(M_GA.our_pop_fitness(new_population, indiSize))))

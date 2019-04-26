@@ -63,11 +63,12 @@ def iterVinos():
         line_count = 0
         for row in csv_reader:
             if line_count in [0,1]:
-                print(f'Column names are {", ".join(row)}')
+                # print(f'Column names are {", ".join(row)}')
                 line_count += 1
             else:
+                line_count += 1
                 yield row
-        print(f'Processed {line_count} lines.')
+        # print(f'Processed {line_count} lines.')
 
 
 def fitness(indiVec, indiSize):
@@ -106,7 +107,9 @@ def fitness(indiVec, indiSize):
     # iteramos sobre los datos
     for wine in itera:
 
+
         cuentaVinos += 1
+        # print( " \n vino : ", cuentaVinos ," \n " )
 
         # Valores de las características de los vinos
         feats = np.asarray([ float(x) for x in wine[0:13] ])
@@ -146,11 +149,11 @@ def fitness(indiVec, indiSize):
         prediction = np.argmax(capaUmbralizada)
 
         # Sumamos el error, si lo hay
-        if not wine[prediction + 13] == 1:
+        if not int(wine[prediction + 13]) == 1:
             error += 1
 
 
-    fitness = error/cuentaVinos
+    fitness = - error/cuentaVinos
 
     return fitness
 
